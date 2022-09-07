@@ -4,13 +4,7 @@ const HeaderOption = ({ Icon, title, avatar }) => {
   return (
     <div className="flex flex-col items-center mr-5 text-gray-400 cursor-pointer hover:text-black">
       {Icon && <Icon />}
-      {avatar && (
-        <img
-          src={avatar}
-          alt=""
-          className="object-cober h-[25px] w-[25px] rounded-full"
-        />
-      )}
+      {avatar && avatar}
       <h1 className=" text-xs font-normal">{title}</h1>
     </div>
   );

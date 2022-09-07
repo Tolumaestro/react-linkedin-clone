@@ -8,11 +8,14 @@ import CalendarViewDayIcon from "@mui/icons-material/CalendarViewDay";
 import Post from "./Post";
 import { db } from "../firebase";
 import firebase from "firebase/compat/app";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
+import FlipMove from "react-flip-move";
 
 const Feed = () => {
   const [input, setInput] = useState("");
-
   const [posts, setPosts] = useState([]);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     db.collection("posts")
@@ -31,10 +34,9 @@ const Feed = () => {
     e.preventDefault();
 
     db.collection("posts").add({
-      name: "Tolulope Soetan",
-      description: "this is a test",
+      name: user.displayName,
+      description: user.email,
       message: input,
-      photoUrl: "",
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
@@ -42,7 +44,7 @@ const Feed = () => {
   };
 
   return (
-    <div className=" flex-[0.6] mx-5">
+    <div className="flex-[0.6] mx-5">
       <div className="bg-white p-[10px] pb-5 rounded-[10px] mb-5">
         <div className=" border-gray-200 border-[1px] rounded-[30px] flex p-[10px] text-gray-400 pl-[15px]">
           <CreateIcon />
@@ -71,20 +73,16 @@ const Feed = () => {
         </div>
       </div>
       {/* Posts */}
-      {posts.map(({ id, data: { name, description, message, photoUrl } }) => (
-        <Post
-          key={id}
-          name={name}
-          description={description}
-          message={message}
-          photoUrl={photoUrl}
-        />
-      ))}
-      {/* <Post
-        name="Tolulope Soetan"
-        description="This is a test"
-        message="Wow this worked"
-      /> */}
+      <FlipMove>
+        {posts.map(({ id, data: { name, description, message } }) => (
+          <Post
+            key={id}
+            name={name}
+            description={description}
+            message={message}
+          />
+        ))}
+      </FlipMove>
     </div>
   );
 };

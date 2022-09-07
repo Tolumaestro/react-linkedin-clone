@@ -6,8 +6,20 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import ChatIcon from "@mui/icons-material/Chat";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../features/userSlice";
+import { auth } from "../firebase";
+import { Avatar } from "@mui/material";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  const user = useSelector(selectUser);
+
+  const logoutApp = () => {
+    dispatch(logout());
+    auth.signOut();
+  };
   return (
     <div className="flex justify-evenly border-b-[0.1px] border-gray-200 py-[10px] sticky top-0 w-full z-[999] bg-white">
       <div className="flex">
@@ -33,10 +45,20 @@ const Header = () => {
         <HeaderOption title="Jobs" Icon={BusinessCenterIcon} />
         <HeaderOption title="Messaging" Icon={ChatIcon} />
         <HeaderOption title="Notifications" Icon={NotificationsIcon} />
-        <HeaderOption
-          avatar="https://images.unsplash.com/photo-1527980965255-d3b416303d12?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YXZhdGFyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1000&q=60"
-          title="Me"
-        />
+        {user && (
+          <div onClick={logoutApp}>
+            <HeaderOption
+              avatar={
+                <Avatar
+                  style={{ width: "18px", height: "18px", fontSize: "10px" }}
+                >
+                  {user.displayName[0]}
+                </Avatar>
+              }
+              title="Me"
+            />
+          </div>
+        )}
       </div>
     </div>
   );

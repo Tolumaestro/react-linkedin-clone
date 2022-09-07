@@ -1,5 +1,7 @@
 import { Avatar } from "@mui/material";
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../features/userSlice";
 
 const stat = "mt-[10px] flex justify-between";
 const statP = "text-gray-400 text-[14px] font-semibold";
@@ -13,17 +15,22 @@ const recentItem = (topic) => (
 );
 
 const Sidebar = () => {
+  const user = useSelector(selectUser);
+  console.log(user);
   return (
-    <div className="top-20 sticky flex-[0.2] rounded-[10px] text-center max:h-screen">
+    <div
+      className="sticky top-20 flex-[0.2] rounded-[10px] text-center"
+      style={{ height: "fit-content" }}
+    >
       <div className="flex flex-col items-center border-gray-200 border-[1px] border-b-0 rounded-tr-[10px] rounded-tl-[10px] bg-white pb-[10px]">
         <img
           src="https://thumbs.dreamstime.com/b/quiet-calm-surface-water-sea-horizon-clear-sky-quiet-calm-surface-water-sea-horizon-clear-sky-129170537.jpg"
           alt=""
           className="mb-[-20px] mt-[-1px] w-full h-[60px] rounded-tl-[10px] rounded-tr-[10px] object-cover"
         />
-        <Avatar className="mb-[10px]" />
-        <h1 className=" text-lg font-bold">Tolulope Soetan</h1>
-        <h1 className=" text-gray-400 text-xs">tolulopesoetan1@gmail.com</h1>
+        <Avatar className="mb-[10px]">{user?.displayName[0]}</Avatar>
+        <h1 className=" text-lg font-bold">{user.displayName}</h1>
+        <h1 className=" text-gray-400 text-xs">{user.email}</h1>
       </div>
 
       <div className=" p-[10px] mb-[10px] bg-white border-gray-200 border-[1px] rounded-bl-[10px] rounded-br-[10px]">
