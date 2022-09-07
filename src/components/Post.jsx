@@ -1,12 +1,15 @@
 import { Avatar } from "@mui/material";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useState } from "react";
 import InputOption from "./InputOption";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 import SendIcon from "@mui/icons-material/Send";
 
 const Post = forwardRef(({ name, description, message }, ref) => {
+  const [like, setLike] = useState(false);
+
   return (
     <div ref={ref} className="bg-white p-[15px] mb-[10px] rounded-[10px]">
       <div className="flex mb-[10px]">
@@ -22,7 +25,13 @@ const Post = forwardRef(({ name, description, message }, ref) => {
       </div>
 
       <div className="flex justify-evenly">
-        <InputOption Icon={ThumbUpOffAltIcon} title="Like" color="gray" />
+        <div onClick={() => setLike(!like)}>
+          <InputOption
+            Icon={like ? ThumbUpIcon : ThumbUpOffAltIcon}
+            title="Like"
+            color="gray"
+          />
+        </div>
         <InputOption
           Icon={ChatBubbleOutlineIcon}
           title="Comment"

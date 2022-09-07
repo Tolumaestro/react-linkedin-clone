@@ -35,13 +35,13 @@ const Login = () => {
   };
   const loginToApp = (e) => {
     e.preventDefault();
-    auth.signInWithEmailAndPassword(email, password);
+    auth.signInWithEmailAndPassword(email, password).catch((err) => alert(err));
   };
 
   const formClass = "w-[350px] h-[50px] text-[20px] pl-[10px]";
 
   return (
-    <div className="grid place-items-center mx-auto py-[50px] ">
+    <div className="flex flex-col items-center justify-center min-h-[91vh] max-h-screen ">
       <img
         src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
         alt="LinkedIn Logo"
